@@ -11,24 +11,16 @@ The sherpa is an AI-powered guide that walks users through the full AIEOS initia
 ```
 aieos-sherpa/
   sherpa-prompt.md              # Canonical sherpa instructions (single source of truth)
+  VERSION                       # Sherpa version
   adapters/
-    claude-code/SKILL.md        # Claude Code skill wrapper
     generic/bootstrap-prompt.md # Paste-anywhere minimal version
-  docs/
-    journal-format.md           # Journal entry types and lifecycle
-    conversation-rubric.md      # 15-criteria manual evaluation rubric
-    test-log.md                 # Historical test session observations
-  tests/integration/            # Automated behavioral test suite
-    drivers/                    # Bash scripts invoking headless AI sessions
-    fixtures/                   # Pre-scripted user interaction scenarios
-    configs/                    # JSON configs defining expected checks per preset
-    validate-sherpa-run.py      # Post-run behavioral analysis
-    README.md                   # Test framework documentation
+  docs/                         # Reference pointers to governance-foundation docs
+  tests/integration/            # Behavioral test suite (configs, drivers, fixtures)
 ```
 
 ## How to Use
 
-**With Claude Code:** Copy `adapters/claude-code/SKILL.md` to `.claude/skills/sherpa/SKILL.md` in your project. Invoke with `/sherpa`.
+**With Claude Code:** The `.claude/skills/sherpa/SKILL.md` in the parent AIEOS workspace delegates to `sherpa-prompt.md`. Invoke with `/sherpa`.
 
 **With any AI:** Paste `sherpa-prompt.md` as the system prompt or opening message. Ensure the AI has file access to the AIEOS framework directory.
 
@@ -42,6 +34,6 @@ The sherpa **produces** project artifacts (PRD, SAD, TDD, etc.) in the user's in
 
 ## Editing the Sherpa
 
-**Always edit `sherpa-prompt.md`** — this is the canonical file. Then regenerate platform adapters as needed. Do NOT edit adapter files directly (except for platform-specific metadata like YAML frontmatter).
+**Always edit `sherpa-prompt.md`** — this is the canonical file. Platform adapters and the Claude Code skill delegate to it. Do NOT inline sherpa logic in adapter or skill files.
 
-The `.claude/skills/sherpa/SKILL.md` in the parent aieos directory should be replaced with `adapters/claude-code/SKILL.md` from this repo.
+The Claude Code skill at `.claude/skills/sherpa/SKILL.md` (in the parent AIEOS workspace) is a thin wrapper — it reads `sherpa-prompt.md` and adds Claude Code-specific tool notes.
