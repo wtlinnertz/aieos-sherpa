@@ -1,0 +1,62 @@
+{
+  "preset": "P5",
+  "preset_name": "Exploratory Research (Convergence Loop)",
+  "initiative_pattern": "AICR",
+  "entry_kit": "PIK",
+  "entry_point": "PIK:WCR",
+
+  "expected_artifacts": [
+    {"glob": "*routing-record*", "type": "routing-record", "frozen": false},
+    {"glob": "*wcr*",            "type": "WCR",            "frozen": true},
+    {"glob": "*intake*",         "type": "intake",         "frozen": false},
+    {"glob": "*pfd*",            "type": "PFD",            "frozen": true},
+    {"glob": "*vh*",             "type": "VH",             "frozen": true},
+    {"glob": "*ar*",             "type": "AR",             "frozen": true},
+    {"glob": "*el*",             "type": "EL",             "frozen": false}
+  ],
+
+  "er_artifact_patterns": [
+    "WCR-AICR-\\d+",
+    "PFD-AICR-\\d+",
+    "VH-AICR-\\d+",
+    "AR-AICR-\\d+",
+    "EL-AICR-\\d+"
+  ],
+
+  "kit_transitions": [],
+
+  "hard_checks": [
+    "routing_record",
+    "frozen_artifacts",
+    "provenance",
+    "er_completeness",
+    "no_ready_prompts",
+    "ar_origin",
+    "el_draft",
+    "convergence_loop",
+    "journal_exists",
+    "journal_entries"
+  ],
+
+  "soft_checks": [
+    "utility_prompts_mentioned",
+    "intent_resolution",
+    "intent_translation_timing",
+    "conditional_opening",
+    "intake_quality_probe",
+    "decision_explanation",
+    "health_dashboard",
+    "elicitation_applied",
+    "decision_explanation_depth",
+    "position_check_invoked",
+    "decision_router_invoked",
+    "convergence_loop_depth",
+    "utility_prompts_per_kit",
+    "quality_score_surfaced",
+    "generation_validation_separation"
+  ],
+
+  "budget_usd": 5,
+
+  "notes": "Same as P5 but intake Section 3 is poisoned with solution content. Expects validation FAIL on no_solutions gate, then correction using CORRECTED Section 3, then PASS on retry."
+}

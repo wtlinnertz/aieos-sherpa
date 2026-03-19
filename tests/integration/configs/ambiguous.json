@@ -1,0 +1,33 @@
+{
+  "preset": "ambiguous",
+  "preset_name": "Ambiguous Routing",
+  "initiative_pattern": "AMBIG",
+  "entry_kit": "unknown",
+  "entry_point": "unknown",
+
+  "expected_artifacts": [
+    {"glob": "*routing-record*", "type": "routing-record", "frozen": false}
+  ],
+
+  "er_artifact_patterns": [],
+
+  "kit_transitions": [],
+
+  "hard_checks": [
+    "routing_record",
+    "no_ready_prompts",
+    "no_force_routing"
+  ],
+
+  "soft_checks": [
+    "intent_resolution",
+    "intent_translation_timing",
+    "decision_router_invoked",
+    "cross_initiative_scan",
+    "path_prediction"
+  ],
+
+  "budget_usd": 2,
+
+  "notes": "Routing-only test. Verifies sherpa asks a clarifying question instead of force-routing when the initial request is ambiguous. No artifact generation beyond routing record."
+}

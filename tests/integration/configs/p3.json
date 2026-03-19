@@ -1,0 +1,70 @@
+{
+  "preset": "P3",
+  "preset_name": "Compliance and Regulatory",
+  "initiative_pattern": "GDPRERASE",
+  "entry_kit": "PIK",
+  "entry_point": "PIK:WCR",
+
+  "expected_artifacts": [
+    {"glob": "*routing-record*", "type": "routing-record", "frozen": false},
+    {"glob": "*wcr*",            "type": "WCR",            "frozen": true},
+    {"glob": "*intake*",         "type": "intake",         "frozen": false},
+    {"glob": "*pfd*",            "type": "PFD",            "frozen": true},
+    {"glob": "*vh*",             "type": "VH",             "frozen": true},
+    {"glob": "*ar*",             "type": "AR",             "frozen": true},
+    {"glob": "*dprd*",           "type": "DPRD",           "frozen": true}
+  ],
+
+  "er_artifact_patterns": [
+    "WCR-{INIT}-\\d+",
+    "PFD-{INIT}-\\d+",
+    "VH-{INIT}-\\d+",
+    "AR-{INIT}-\\d+",
+    "DPRD-{INIT}-\\d+"
+  ],
+
+  "kit_transitions": [],
+
+  "hard_checks": [
+    "routing_record",
+    "frozen_artifacts",
+    "provenance",
+    "er_completeness",
+    "no_ready_prompts",
+    "journal_exists",
+    "journal_entries"
+  ],
+
+  "soft_checks": [
+    "cross_cutting_adoption",
+    "intent_resolution",
+    "intent_translation_timing",
+    "conditional_opening",
+    "intake_quality_probe",
+    "decision_explanation",
+    "health_dashboard",
+    "elicitation_applied",
+    "decision_explanation_depth",
+    "position_check_invoked",
+    "decision_router_invoked",
+    "risk_surfaced",
+    "path_prediction",
+    "fast_path_used",
+    "utility_prompts_per_kit",
+    "cross_cutting_timing",
+    "health_dashboard_depth",
+    "reentry_awareness",
+    "quality_score_surfaced",
+    "consistency_check_run",
+    "finding_accumulated",
+    "cross_initiative_scan",
+    "template_prepopulated",
+    "adversarial_lens_offered",
+    "generation_validation_separation",
+    "artifact_id_discipline"
+  ],
+
+  "budget_usd": 8,
+
+  "notes": "P3 Compliance routes through PIK but with compliance-specific guidance. VH is minimal (mandate-driven). EL may be skipped or minimal (regulatory mandates don't require user-desirability experiments). CER should be mentioned as required SCK artifact. SCK-before-QAK ordering should be noted. Test stops after DPRD freeze."
+}

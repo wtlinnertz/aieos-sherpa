@@ -1,0 +1,53 @@
+{
+  "preset": "P5",
+  "preset_name": "Exploratory Research (Session Resumption)",
+  "initiative_pattern": "AICR",
+  "entry_kit": "PIK",
+  "entry_point": "PIK:WCR",
+
+  "expected_artifacts": [
+    {"glob": "*routing-record*", "type": "routing-record", "frozen": false},
+    {"glob": "*wcr*",            "type": "WCR",            "frozen": true},
+    {"glob": "*intake*",         "type": "intake",         "frozen": false},
+    {"glob": "*pfd*",            "type": "PFD",            "frozen": true},
+    {"glob": "*vh*",             "type": "VH",             "frozen": true},
+    {"glob": "*ar*",             "type": "AR",             "frozen": true},
+    {"glob": "*el*",             "type": "EL",             "frozen": true},
+    {"glob": "*dprd*",           "type": "DPRD",           "frozen": true}
+  ],
+
+  "er_artifact_patterns": [
+    "WCR-AICR-\\d+",
+    "PFD-AICR-\\d+",
+    "VH-AICR-\\d+",
+    "AR-AICR-\\d+",
+    "EL-AICR-\\d+",
+    "DPRD-AICR-\\d+"
+  ],
+
+  "kit_transitions": [],
+
+  "hard_checks": [
+    "routing_record",
+    "frozen_artifacts",
+    "provenance",
+    "er_completeness",
+    "no_ready_prompts",
+    "session_resumption",
+    "journal_exists",
+    "journal_entries"
+  ],
+
+  "soft_checks": [
+    "intent_resolution",
+    "rationale_replay",
+    "position_check_invoked",
+    "decision_explanation_depth",
+    "session_resumption_depth",
+    "cross_initiative_scan"
+  ],
+
+  "budget_usd": 8,
+
+  "notes": "Two-phase test. Phase 1 generates P5 artifacts to EL Draft. Phase 2 resumes the session, fills in EL results, freezes EL, and generates DPRD. Key check: sherpa discovers existing ER and resumes from correct position."
+}

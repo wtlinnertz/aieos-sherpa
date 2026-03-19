@@ -1,0 +1,65 @@
+{
+  "preset": "P5",
+  "preset_name": "Exploratory Research",
+  "initiative_pattern": "AICR",
+  "entry_kit": "PIK",
+  "entry_point": "PIK:WCR",
+
+  "expected_artifacts": [
+    {"glob": "*routing-record*", "type": "routing-record", "frozen": false},
+    {"glob": "*wcr*",            "type": "WCR",            "frozen": true},
+    {"glob": "*intake*",         "type": "intake",         "frozen": false},
+    {"glob": "*pfd*",            "type": "PFD",            "frozen": true},
+    {"glob": "*vh*",             "type": "VH",             "frozen": true},
+    {"glob": "*ar*",             "type": "AR",             "frozen": true},
+    {"glob": "*el*",             "type": "EL",             "frozen": false}
+  ],
+
+  "er_artifact_patterns": [
+    "WCR-{INIT}-\\d+",
+    "PFD-{INIT}-\\d+",
+    "VH-{INIT}-\\d+",
+    "AR-{INIT}-\\d+",
+    "EL-{INIT}-\\d+"
+  ],
+
+  "kit_transitions": [],
+
+  "hard_checks": [
+    "routing_record",
+    "frozen_artifacts",
+    "provenance",
+    "er_completeness",
+    "no_ready_prompts",
+    "ar_origin",
+    "el_draft",
+    "journal_exists",
+    "journal_entries"
+  ],
+
+  "soft_checks": [
+    "utility_prompts_mentioned",
+    "intent_resolution",
+    "intent_translation_timing",
+    "conditional_opening",
+    "intake_quality_probe",
+    "decision_explanation",
+    "health_dashboard",
+    "elicitation_applied",
+    "decision_explanation_depth",
+    "position_check_invoked",
+    "decision_router_invoked",
+    "path_prediction",
+    "utility_prompts_per_kit",
+    "health_dashboard_depth",
+    "quality_score_surfaced",
+    "finding_accumulated",
+    "cross_initiative_scan",
+    "generation_validation_separation",
+    "artifact_id_discipline"
+  ],
+
+  "budget_usd": 5,
+
+  "notes": "P5 ends at EL Draft — no DPRD, no downstream kits. EL stays Draft because experiment results are pending."
+}

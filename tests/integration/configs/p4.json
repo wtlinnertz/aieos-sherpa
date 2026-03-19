@@ -1,0 +1,63 @@
+{
+  "preset": "P4",
+  "preset_name": "Performance and Reliability Fix",
+  "initiative_pattern": "APILATENCY",
+  "entry_kit": "ODK",
+  "entry_point": "ODK:DCR",
+
+  "expected_artifacts": [
+    {"glob": "*routing-record*", "type": "routing-record", "frozen": false},
+    {"glob": "*dcr*",            "type": "DCR",            "frozen": true},
+    {"glob": "*inr*",            "type": "INR",            "frozen": true},
+    {"glob": "*pmr*",            "type": "PMR",            "frozen": true},
+    {"glob": "*ker*",            "type": "KER",            "frozen": true}
+  ],
+
+  "er_artifact_patterns": [
+    "DCR-{INIT}-\\d+",
+    "INR-{INIT}-\\d+",
+    "PMR-{INIT}-\\d+",
+    "KER-{INIT}-\\d+"
+  ],
+
+  "kit_transitions": ["ODK→EEK"],
+
+  "hard_checks": [
+    "routing_record",
+    "frozen_artifacts",
+    "provenance",
+    "er_completeness",
+    "no_ready_prompts",
+    "ker_justification",
+    "journal_exists",
+    "journal_entries"
+  ],
+
+  "soft_checks": [
+    "kit_transition_explanations",
+    "intent_resolution",
+    "intent_translation_timing",
+    "conditional_opening",
+    "decision_explanation",
+    "health_dashboard",
+    "briefing_distillation_offered",
+    "decision_explanation_depth",
+    "handoff_navigator_invoked",
+    "decision_router_invoked",
+    "risk_surfaced",
+    "path_prediction",
+    "utility_prompts_per_kit",
+    "reentry_awareness",
+    "quality_score_surfaced",
+    "consistency_check_run",
+    "finding_accumulated",
+    "cross_initiative_scan",
+    "adversarial_lens_offered",
+    "generation_validation_separation",
+    "boundary_contract_verified"
+  ],
+
+  "budget_usd": 5,
+
+  "notes": "P4 enters at ODK (not PIK or EEK). Flow: DCR → INR → PMR → ODK→EEK transition → KER (Path B citing PMR corrective actions). Test stops after KER freeze. Note: EEK may not have entry-from-odk.md — log as framework gap if sherpa struggles with the handoff."
+}

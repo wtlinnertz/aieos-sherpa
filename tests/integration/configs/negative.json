@@ -1,0 +1,54 @@
+{
+  "preset": "P5",
+  "preset_name": "Exploratory Research (Negative Results)",
+  "initiative_pattern": "AICR",
+  "entry_kit": "PIK",
+  "entry_point": "PIK:WCR",
+
+  "expected_artifacts": [
+    {"glob": "*routing-record*", "type": "routing-record", "frozen": false},
+    {"glob": "*wcr*",            "type": "WCR",            "frozen": true},
+    {"glob": "*intake*",         "type": "intake",         "frozen": false},
+    {"glob": "*pfd*",            "type": "PFD",            "frozen": true},
+    {"glob": "*vh*",             "type": "VH",             "frozen": true},
+    {"glob": "*ar*",             "type": "AR",             "frozen": true},
+    {"glob": "*el*",             "type": "EL",             "frozen": true}
+  ],
+
+  "er_artifact_patterns": [
+    "WCR-AICR-\\d+",
+    "PFD-AICR-\\d+",
+    "VH-AICR-\\d+",
+    "AR-AICR-\\d+",
+    "EL-AICR-\\d+"
+  ],
+
+  "kit_transitions": [],
+
+  "hard_checks": [
+    "routing_record",
+    "frozen_artifacts",
+    "provenance",
+    "er_completeness",
+    "no_ready_prompts",
+    "el_pause_outcome",
+    "no_dprd",
+    "journal_exists",
+    "journal_entries"
+  ],
+
+  "soft_checks": [
+    "intent_resolution",
+    "intent_translation_timing",
+    "conditional_opening",
+    "intake_quality_probe",
+    "decision_explanation",
+    "decision_explanation_depth",
+    "decision_router_invoked",
+    "finding_accumulated"
+  ],
+
+  "budget_usd": 5,
+
+  "notes": "Two-phase test. Phase 1 generates P5 artifacts to EL Draft. Phase 2 resumes with negative results that hit falsification thresholds. EL outcome should be pause. No DPRD should be generated. ER should be updated with pause status."
+}

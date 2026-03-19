@@ -1,0 +1,58 @@
+{
+  "preset": "P2",
+  "preset_name": "Enhancement (PRK Convergence)",
+  "initiative_pattern": "TASKPRK",
+  "entry_kit": "EEK",
+  "entry_point": "EEK:KER",
+
+  "expected_artifacts": [
+    {"glob": "*routing-record*", "type": "routing-record", "frozen": false},
+    {"glob": "*ker*",            "type": "KER",            "frozen": true},
+    {"glob": "*prd*",            "type": "PRD",            "frozen": true},
+    {"glob": "*acf*",            "type": "ACF",            "frozen": true},
+    {"glob": "*sad*",            "type": "SAD",            "frozen": true}
+  ],
+
+  "er_artifact_patterns": [
+    "KER-{INIT}-\\d+",
+    "PRD-{INIT}-\\d+",
+    "ACF-{INIT}-\\d+",
+    "SAD-{INIT}-\\d+"
+  ],
+
+  "kit_transitions": [],
+
+  "hard_checks": [
+    "routing_record",
+    "frozen_artifacts",
+    "provenance",
+    "er_completeness",
+    "no_ready_prompts",
+    "ker_justification",
+    "journal_exists",
+    "journal_entries"
+  ],
+
+  "soft_checks": [
+    "intent_resolution",
+    "intent_translation_timing",
+    "conditional_opening",
+    "decision_explanation",
+    "decision_explanation_depth",
+    "decision_router_invoked",
+    "adversarial_lens_offered",
+    "sub_agent_awareness",
+    "convergence_loop_depth",
+    "elicitation_applied",
+    "risk_surfaced",
+    "path_prediction",
+    "quality_score_surfaced",
+    "generation_validation_separation",
+    "artifact_id_discipline",
+    "parallel_execution"
+  ],
+
+  "budget_usd": 6,
+
+  "notes": "PRK-focused test. P2 path through EEK to SAD freeze. PRK is adopted for architecture review. Adversarial lens should be offered as optional. Convergence loop tested on PRK: if PRR FAIL, lens re-execution. Sub-agent awareness: lens parallelism should be mentioned."
+}
