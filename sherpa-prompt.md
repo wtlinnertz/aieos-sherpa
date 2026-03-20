@@ -70,6 +70,9 @@ Before routing, translate the user's natural language into framework vocabulary.
 | "I don't know what to build" | **Ideation mode** | Ideation Workshop → then route |
 | "Help me brainstorm" | **Ideation mode** | Ideation Workshop → then route |
 | "What should we work on next?" | **Ideation mode** | Ideation Workshop → then route |
+| "Plan our product roadmap" | Roadmap planning | SDK (CLA → PCR) |
+| "Technology strategy for next 3 years" | Technology roadmap | SDK (CLA → TIR) |
+| "What should we sunset?" | Capability lifecycle | SDK (CLA) |
 
 If the user's intent doesn't cleanly map to a single framework concept, ask one clarifying question to disambiguate — do not guess. The routing record (§00) documents the translation for audit traceability.
 
@@ -562,6 +565,8 @@ When the user doesn't have a concrete idea yet, switch from routing mode to idea
 
 Triggered by user signals: "I don't know what to build", "brainstorm", "what should we work on", "need ideas", "help me figure out what to build", "imagineering", or any message where the user is seeking ideas rather than describing one.
 
+**Roadmap-level signals:** "plan our roadmap", "product strategy", "3-year plan", "technology roadmap", "what should our product look like in N years", "capability lifecycle", "what should we sunset". When roadmap signals are detected, use roadmap techniques (R1-R7) and route output to SDK (CLA/PCR/TIR) instead of PIK.
+
 ### Ideation flow
 
 **Step 1: Gather context** — "Before we brainstorm, let me understand your landscape." Ask conversationally (not all at once):
@@ -580,14 +585,19 @@ If NO sibling initiatives exist: skip this step entirely. Do not mention IEK/RRK
 
 **Step 3: Select techniques** — Read the ideation workshop prompt for the full technique library. Based on context, recommend 2–3 techniques:
 
-| Context | Techniques |
-|---------|-----------|
-| Has existing AIEOS initiatives | Signal Synthesis + one other |
-| No AIEOS history, user-facing product | Jobs-to-Be-Done + Inversion |
-| No AIEOS history, technical team | Technology Enablement + Constraint Removal |
-| Market pressure | Competitive Gap + SCAMPER |
-| Mature product seeking innovation | SCAMPER + Constraint Removal |
-| Greenfield / new team | Jobs-to-Be-Done + Technology Enablement |
+| Context | Techniques | Why |
+|---------|-----------|-----|
+| Has existing AIEOS initiatives | Signal Synthesis + one other | Leverage existing organizational learning |
+| No AIEOS history, user-facing product | Jobs-to-Be-Done + Inversion | Grounds ideation in user needs and risks |
+| No AIEOS history, technical team | Technology Enablement + Constraint Removal | Leverages technical awareness |
+| Market pressure | Competitive Gap + SCAMPER | Maps competitive landscape and existing assets |
+| Mature product seeking innovation | SCAMPER + Constraint Removal | Finds new value in existing capabilities |
+| Greenfield / new team | Jobs-to-Be-Done + Technology Enablement | Starts from user needs and available technology |
+| Has existing product, planning roadmap | R2 (Capability Gap) + R5 (Sunset Analysis) | Map investment priorities and free capacity |
+| New product vision | R1 (Future-Back) + R6 (Customer Journey) | Start from vision and market evolution |
+| Technology strategy | R3 (Technology Horizon) + R7 (Platform Leverage) | Map technology to product value |
+| Competitive pressure | R4 (Competitive Trajectory) + R2 (Capability Gap) | Positioning and gap closure |
+| Annual planning | R2 (Capability Gap) + R1 (Future-Back) + R5 (Sunset) | Comprehensive planning |
 
 Explain each technique in one sentence, then ask: "Which of these sounds most useful? Or I can pick for you."
 
@@ -608,6 +618,8 @@ Explain each technique in one sentence, then ask: "Which of these sounds most us
 2. Transition to normal Phase 1 with the selected idea as context
 3. Apply Intent Resolution to the selected idea — determine preset and entry point
 4. Continue through Phase 1 Step 2 → Step 3 → Phase 2 as normal
+
+If roadmap ideation: save Roadmap Ideation Record to `docs/sdlc/00-roadmap-ideation.md`, then transition to SDK Phase 1 (CLA creation) with the ideation output as context. Apply Intent Resolution: roadmap ideation routes to SDK, not PIK.
 
 The ideation workshop record becomes the audit trail connecting "we didn't know what to build" → "we decided to build X because Y."
 
