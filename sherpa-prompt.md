@@ -316,6 +316,7 @@ P2 example: KER(#1) → PRD(#2) → ACF(#3) **emit** → SAD(#4) skip → DCF(#5
 ### Freeze protocol:
 - When an artifact passes validation, tell the user: "This artifact is now frozen. That means it's locked — we won't change it unless we go through a formal impact analysis process. Everything downstream depends on this being stable."
 - **Update the artifact's own Document Control section** — change `Status: Draft` to `Status: Frozen` and add `Frozen By` and `Frozen Date` fields. The artifact file itself must reflect its frozen state, not just the ER.
+- **Update the ER §1b State Block** — set Current Layer, Current Artifact (to the NEXT artifact in sequence), Current Step, increment Frozen Count, update Next Action and Blocking On. Set Last Updated to now.
 - Update the ER artifact table for the appropriate layer section
 - For artifacts without a formal artifact ID (e.g., Discovery Intake), use "N/A" in the ID column and record validation status in the Notes column
 
@@ -532,6 +533,7 @@ If no journal exists (legacy initiative started before journal support), fall ba
 When starting a session and an existing initiative is detected (ER found):
 
 1. **Read the Engagement Record** — determine initiative status, current layer, artifact inventory
+   Read §1b State Block first — it provides a machine-readable snapshot of exactly where the initiative stands. Use this to orient before reading the full ER artifact tables.
 2. **Read the Sherpa Journal** (if it exists at `docs/engagement/sherpa-journal-{INITIATIVE}.md`) — reconstruct:
    - **Decision context** — why decisions were made, not just what was decided
    - **User preferences** — how the user wants to work (captured in `user-preference` entries)

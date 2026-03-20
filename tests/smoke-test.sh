@@ -216,6 +216,98 @@ if [[ -f "$SHERPA_ROOT/sherpa-prompt.md" ]]; then
   done
 fi
 
+# ─── 11. Cross-AI compatibility artifacts ────────────────────────────────────
+
+# Adapter directories (at least 2: generic + copilot-cli)
+ADAPTER_COUNT=$(ls -d "$SHERPA_ROOT/adapters/"*/ 2>/dev/null | wc -l)
+if [[ "$ADAPTER_COUNT" -ge 2 ]]; then
+  pass "At least 2 adapter directories ($ADAPTER_COUNT found)"
+else
+  fail "Fewer than 2 adapter directories ($ADAPTER_COUNT found, expected >=2)"
+fi
+
+# Copilot CLI adapter
+if [[ -f "$SHERPA_ROOT/adapters/copilot-cli/README.md" ]]; then
+  pass "Copilot CLI adapter exists"
+else
+  fail "Copilot CLI adapter missing: adapters/copilot-cli/README.md"
+fi
+
+# AI capability matrix
+if [[ -f "$SHERPA_ROOT/docs/ai-capability-matrix.md" ]]; then
+  pass "AI capability matrix exists"
+else
+  fail "AI capability matrix missing: docs/ai-capability-matrix.md"
+fi
+
+# Cross-AI handoff protocol
+if [[ -f "$SHERPA_ROOT/docs/cross-ai-handoff.md" ]]; then
+  pass "Cross-AI handoff protocol exists"
+else
+  fail "Cross-AI handoff protocol missing: docs/cross-ai-handoff.md"
+fi
+
+# Validator consistency test methodology
+if [[ -f "$SHERPA_ROOT/docs/validator-consistency-test.md" ]]; then
+  pass "Validator consistency test methodology exists"
+else
+  fail "Validator consistency test missing: docs/validator-consistency-test.md"
+fi
+
+# ─── 12. Compact prompt parity ───────────────────────────────────────────────
+
+if [[ -f "$SHERPA_ROOT/sherpa-prompt-compact.md" ]]; then
+  COMPACT_LINES=$(wc -l < "$SHERPA_ROOT/sherpa-prompt-compact.md")
+  if [[ "$COMPACT_LINES" -lt 350 ]]; then
+    pass "Compact prompt exists and is under 350 lines ($COMPACT_LINES lines)"
+  else
+    fail "Compact prompt too long ($COMPACT_LINES lines, limit 350)"
+  fi
+
+  # Verify key sections present in compact version too
+  COMPACT_MISSING=0
+  COMPACT_SECTIONS=(
+    "Phase 1: Discovery"
+    "Phase 2: Project Setup"
+    "Phase 3: Artifact Generation"
+    "Phase 4: Kit Transitions"
+    "Phase 5: Cross-Cutting Kits"
+    "Phase 6: Completion"
+    "Critical Rules"
+    "Intent Resolution"
+    "Risk scan"
+    "Quality scoring"
+    "Cross-artifact consistency"
+    "Health Dashboard Check"
+    "Fast-path"
+    "Ideation Mode"
+  )
+  for section in "${COMPACT_SECTIONS[@]}"; do
+    if ! grep -qi "$section" "$SHERPA_ROOT/sherpa-prompt-compact.md"; then
+      fail "Compact prompt missing section: $section"
+      COMPACT_MISSING=$((COMPACT_MISSING + 1))
+    fi
+  done
+  if [[ "$COMPACT_MISSING" -eq 0 ]]; then
+    pass "Compact prompt has all $((${#COMPACT_SECTIONS[@]})) key sections"
+  fi
+else
+  fail "Compact prompt missing: sherpa-prompt-compact.md"
+fi
+
+# ─── 13. State block in ER spec ──────────────────────────────────────────────
+
+ER_SPEC="$AIEOS_ROOT/aieos-governance-foundation/docs/engagement-record-spec.md"
+if [[ -f "$ER_SPEC" ]]; then
+  if grep -q "State Block" "$ER_SPEC"; then
+    pass "ER spec defines State Block (§1b)"
+  else
+    fail "ER spec missing State Block definition"
+  fi
+else
+  skip "ER spec not found at $ER_SPEC"
+fi
+
 # ─── Summary ─────────────────────────────────────────────────────────────────
 
 echo "  $(printf '─%.0s' {1..40})"
