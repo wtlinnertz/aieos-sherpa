@@ -1831,6 +1831,40 @@ def check_self_score_generated(config: dict, run_dir: Path, project_dir: Path) -
     return issues
 
 
+def check_ideation_mode_offered(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
+    """Verify sherpa offered ideation mode when user signaled no concrete idea."""
+    issues = []
+
+    output_log = run_dir / "claude-output.log"
+    transcript = run_dir / "session-transcript.md"
+
+    content = ""
+    if output_log.exists():
+        content = output_log.read_text()
+    elif transcript.exists():
+        content = transcript.read_text()
+
+    if not content:
+        return issues
+
+    ideation_patterns = [
+        r"ideation",
+        r"brainstorm",
+        r"workshop",
+        r"(generate|come\s+up\s+with|explore).{0,20}(ideas|opportunities|options)",
+        r"(jobs.to.be.done|constraint\s+removal|competitive\s+gap|technology\s+enablement|inversion|SCAMPER|signal\s+synthesis)",
+        r"(technique|approach).{0,20}(brainstorm|ideate|generate\s+ideas)",
+        r"ideation.workshop.record",
+    ]
+    found = any(re.search(pat, content, re.IGNORECASE) for pat in ideation_patterns)
+    if not found:
+        issues.append(
+            "No ideation mode evidence found (sherpa should offer structured ideation when user signals 'I don't know what to build')"
+        )
+
+    return issues
+
+
 def check_cross_initiative_scan(config: dict, run_dir: Path, project_dir: Path) -> list[str]:
     """Verify sherpa scanned for sibling initiatives and mentioned any found."""
     issues = []
@@ -2055,6 +2089,7 @@ CHECK_REGISTRY: dict[str, callable] = {
     "consistency_check_run":        check_consistency_check_run,
     "finding_accumulated":          check_finding_accumulated,
     "cross_initiative_scan":        check_cross_initiative_scan,
+    "ideation_mode_offered":        check_ideation_mode_offered,
     "parallel_execution":           check_parallel_execution,
     "template_prepopulated":        check_template_prepopulated,
     "retrospective_generated":      check_retrospective_generated,
