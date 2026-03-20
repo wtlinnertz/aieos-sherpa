@@ -204,6 +204,8 @@ if [[ -f "$SHERPA_ROOT/sherpa-prompt.md" ]]; then
     "Health Dashboard Check"
     "Fast-path"
     "Template pre-population"
+    "Ideation Mode"
+    "Prerequisites"
   )
   for section in "${SECTIONS[@]}"; do
     if grep -qi "$section" "$SHERPA_ROOT/sherpa-prompt.md"; then
