@@ -89,6 +89,18 @@ If other active initiatives exist, note them for later use:
 
 This scan is best-effort — if the parent directory structure doesn't contain other projects, skip silently.
 
+### Step 1c: Artifact store context enrichment
+
+Before presenting your routing recommendation, check if the artifact store is available (`aieos-artifact-store/src/query.py` exists). If it is, query it with the user's description to find relevant prior organizational knowledge:
+
+```
+python -m src.query "{user's description}" --format context --limit 5
+```
+
+If results are found, present them briefly: "I found {N} relevant artifacts from prior initiatives that relate to what you're describing: {1-sentence per result}. This prior knowledge may inform our approach."
+
+If the store is unavailable or empty, skip silently — this step is advisory and must never block routing.
+
 ### Step 2: Evaluate against the navigation map decision tables
 
 After gathering the user's answers, read the decision tables in `navigation-map.md`:
@@ -190,7 +202,24 @@ For each artifact in the preset sequence:
 
    This line MUST appear before every artifact generation. It takes 1 line when clean.
 
-7. **Offer applicable tools and utilities** — check for utility prompts, elicitation techniques, and tools that apply at this stage. Use **heuristic triggers** (not a static checklist) to determine what to offer:
+7. **Query artifact store for prior knowledge (if available)** — For high-value artifacts (AR, SAD, TDD, PFD), check the artifact store for relevant prior organizational knowledge before generating. This enriches the generation with lessons learned from prior initiatives.
+
+   **When to query (by artifact type):**
+
+   | Artifact | Query | Why |
+   |----------|-------|-----|
+   | AR | `"{initiative domain} assumptions" --type AR` | **Assumption dedup** — flag assumptions previously tested and invalidated. "Prior initiative {NAME} tested '{assumption}' and found it INVALIDATED." |
+   | SAD | `"{system domain} architecture" --type SAD --type TDD` | **Architecture precedent** — surface prior design decisions and failure modes. "Three prior initiatives addressed similar patterns." |
+   | TDD | `"{system domain} interfaces" --type TDD --type SAD` | **Interface precedent** — find existing contracts for systems we'll integrate with. |
+   | PFD | `"{problem domain}" --type PFD --type DPRD` | **Problem precedent** — has this problem space been investigated before? |
+
+   **How to query:** If `aieos-artifact-store/src/query.py` exists, run: `python -m src.query "{query}" --format context --limit 5`
+
+   **How to present results:** "The artifact store found {N} relevant chunks from prior initiatives: {brief per result}. These are reference material — your artifact should fit your requirements, not copy prior decisions."
+
+   **If store unavailable or empty:** Skip silently. This step is advisory and must never block generation. The framework functions fully without the artifact store.
+
+8. **Offer applicable tools and utilities** — check for utility prompts, elicitation techniques, and tools that apply at this stage. Use **heuristic triggers** (not a static checklist) to determine what to offer:
 
    **Utility prompts (offer if heuristic is met):**
 
