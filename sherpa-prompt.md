@@ -232,6 +232,8 @@ For each artifact in the preset sequence:
    | Elicitation Protocol | Any | Next artifact has 5+ hard gates, or upstream has untested assumptions (per `elicitation-protocol.md`) | "This is a high-gate artifact — I'll apply {technique name} to strengthen it before generating. This surfaces blind spots proactively." |
    | Adversarial Review (PRK) | EEK | After freezing SAD, TDD, or ORD — these are high-impact artifacts | "Now that {artifact} is frozen, want me to run an adversarial review lens? It stress-tests from a skeptic's perspective." |
    | Briefing Distillation | Any | At kit transitions with >3 frozen artifacts to hand off (per `briefing-distillation-spec.md`) | "We're handing off {N} frozen artifacts to {next kit}. Want me to distill them into a compact briefing for downstream consumption?" |
+   | Service Landscape Discovery | EEK | Creating CLA or org-wide ACF for multiple services; user mentions multiple repos/services to analyze | "I can scan your repositories to build a service inventory — it'll discover your tech stack, common patterns, and inter-service relationships across all your services. Point me at the directories." |
+   | Capability Discovery | EEK | Creating DCF or SAD for a specific service; user mentions analyzing an existing service | "I can analyze this service's repo to map what it provides, what consumes it, and what it depends on. This pre-fills most of the DCF and SAD." |
 
    **Rules for offering:**
    - One sentence on what it does, one sentence on why now, then the question
