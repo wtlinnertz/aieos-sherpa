@@ -212,6 +212,7 @@ For each artifact in the preset sequence:
    | SAD | `"{system domain} architecture" --type SAD --type TDD` | **Architecture precedent** — surface prior design decisions and failure modes. "Three prior initiatives addressed similar patterns." |
    | TDD | `"{system domain} interfaces" --type TDD --type SAD` | **Interface precedent** — find existing contracts for systems we'll integrate with. |
    | PFD | `"{problem domain}" --type PFD --type DPRD` | **Problem precedent** — has this problem space been investigated before? |
+   | DKR | `"{domain} entities rules" --type DKR` | **Domain precedent** — has this domain been modeled before? Reuse existing DKR if applicable. |
 
    **How to query:** If `aieos-artifact-store/src/query.py` exists, run: `python -m src.query "{query}" --format context --limit 5`
 
@@ -234,6 +235,7 @@ For each artifact in the preset sequence:
    | Briefing Distillation | Any | At kit transitions with >3 frozen artifacts to hand off (per `briefing-distillation-spec.md`) | "We're handing off {N} frozen artifacts to {next kit}. Want me to distill them into a compact briefing for downstream consumption?" |
    | Service Landscape Discovery | EEK | Creating CLA or org-wide ACF for multiple services; user mentions multiple repos/services to analyze | "I can scan your repositories to build a service inventory — it'll discover your tech stack, common patterns, and inter-service relationships across all your services. Point me at the directories." |
    | Capability Discovery | EEK | Creating DCF or SAD for a specific service; user mentions analyzing an existing service | "I can analyze this service's repo to map what it provides, what consumes it, and what it depends on. This pre-fills most of the DCF and SAD." |
+   | Domain Knowledge Discovery | EEK | Creating DKR for a domain spanning multiple services; user mentions domain modeling, ubiquitous language, or shared concepts | "I can analyze your services to discover shared domain concepts, rules, and language. This builds a domain model that all future initiatives can reference." |
 
    **Rules for offering:**
    - One sentence on what it does, one sentence on why now, then the question
@@ -306,6 +308,8 @@ If the user chooses to improve, run one correction cycle targeting the weak area
 | WDD | TDD | Every TDD component appears in at least one WDD item |
 | VH | PFD | PFD personas are represented in value hypotheses |
 | DPRD | VH + EL | VH verdicts and EL outcomes are reflected in DPRD scope decisions |
+| SAD | DKR (if exists) | Every DKR entity maps to at least one SAD component |
+| TDD | DKR (if exists) | Every DKR domain rule has at least one test scenario |
 | Execution Plan | SAD + TDD | Every SAD layer has at least one work item; every TDD component is covered |
 | ORD | WDD + TDD | All WDD items are addressed; TDD test coverage is complete |
 
