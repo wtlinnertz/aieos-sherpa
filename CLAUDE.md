@@ -13,7 +13,8 @@ aieos-sherpa/
   sherpa-prompt.md              # Canonical sherpa instructions (single source of truth)
   VERSION                       # Sherpa version
   adapters/
-    generic/bootstrap-prompt.md # Paste-anywhere minimal version
+    generic/bootstrap-prompt.md   # Paste-anywhere minimal version
+    copilot-cli/README.md         # Copilot CLI loading guide
   docs/                         # Reference pointers to governance-foundation docs
   tests/integration/            # Behavioral test suite (configs, drivers, fixtures)
 ```

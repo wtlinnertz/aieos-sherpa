@@ -45,12 +45,15 @@ your-workspace/
 sherpa-prompt.md              # Canonical prompt (single source of truth)
 adapters/
   generic/bootstrap-prompt.md # Minimal paste-anywhere pointer
+  copilot-cli/README.md       # Copilot CLI loading guide
 docs/                         # References to governance-foundation docs
-tests/integration/            # Behavioral test suite
-  configs/                    # 11 JSON configs (P1-P5, edge cases)
-  drivers/                    # 9 headless AI test drivers
-  fixtures/                   # Pre-scripted user scenarios
-  validate-sherpa-run.py      # Post-run analysis (53+ behavioral checks)
+tests/
+  smoke-test.sh               # Quick structural smoke test
+  integration/                # Behavioral test suite
+    configs/                  # 11 JSON configs (P1-P5, edge cases)
+    drivers/                  # 11 headless AI test drivers
+    fixtures/                 # Pre-scripted user scenarios
+    validate-sherpa-run.py    # Post-run analysis (53+ behavioral checks)
 ```
 
 ## Editing
