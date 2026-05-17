@@ -34,7 +34,7 @@ This project **consumes** the AIEOS governance framework. It expects sibling dir
 your-workspace/
   aieos-governance-foundation/    # Required — specs, navigation map, tools
   aieos-product-intelligence-kit/ # Required for Layer 2 initiatives
-  aieos-engineering-execution-kit/# Required for Layer 4 initiatives
+  aieos-engineering-execution/# Required for Layer 4 initiatives
   aieos-sherpa/                   # This project
   ...other kits as needed...
 ```
