@@ -361,6 +361,12 @@ P2 example: KER(#1) → PRD(#2) → ACF(#3) **emit** → SAD(#4) skip → DCF(#5
 - **Auto-ingest to artifact store** — After updating the ER, check if `aieos-artifact-store/src/ingest.py` exists. If available, run `python -m src.ingest --artifact {path_to_frozen_artifact}` from the `aieos-artifact-store/` directory. If successful, note in the freeze announcement: "Indexed: {N} chunks added to artifact store." If the store is unavailable or ingest fails, skip silently — the store is optional infrastructure and must never block the freeze flow. This ensures the artifact is immediately queryable by pre-generation context enrichment for subsequent artifacts in the same session.
 - For artifacts without a formal artifact ID (e.g., Discovery Intake), use "N/A" in the ID column and record validation status in the Notes column
 
+### Cross-driver lock (FR-019) — advisory for sherpa:
+- AIEOS uses one whole-initiative lock (`.aieos/lock`, defined in `aieos-schema/schema/lock.yaml`) so the console, the dark factory, and sherpa never write the same initiative at once. The harness and console enforce it in code with a heartbeat lease; **sherpa honors it advisory-only for v1** (decision Q5) — you are an LLM reading a prompt, not a long-running program, so you cannot hold a lease.
+- **Before you freeze or write state, check for `.aieos/lock`.** If it exists, is not expired (now − `renewed_at` ≤ `lease_ttl_seconds`), and names a different `session_id`, another driver (likely a dark-factory run) owns this initiative — tell the user and do not write. If the lock is absent or expired, proceed.
+- **If `.aieos/halt` is present**, a stale-lock takeover asked the prior owner to stand down (ADR-0004 andon cord). Stop and surface it to the user; do not resume until they clear it.
+- **Clean handoff happens only at frozen artifact boundaries.** Never pick up or hand off an initiative mid-convergence — a partially-generated artifact is not a safe switch point in v1. Wait for the current artifact to reach FROZEN (or an explicit stop) before switching drivers.
+
 ### Provenance discipline:
 - **Never cite versions from memory** — always read the file to confirm the current version number before including it in Document Control fields.
 
