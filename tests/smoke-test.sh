@@ -299,7 +299,7 @@ fi
 
 ER_SPEC="$AIEOS_ROOT/aieos-governance-foundation/docs/engagement-record-spec.md"
 if [[ -f "$ER_SPEC" ]]; then
-  if grep -q "State Block" "$ER_SPEC"; then
+  if grep -qi "state block" "$ER_SPEC"; then
     pass "ER spec defines State Block (§1b)"
   else
     fail "ER spec missing State Block definition"

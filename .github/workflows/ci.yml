@@ -1,0 +1,23 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sherpa
+        uses: actions/checkout@v4
+        with:
+          path: aieos-sherpa
+      - name: Checkout governance-foundation (sibling — smoke test cross-references it)
+        uses: actions/checkout@v4
+        with:
+          repository: wtlinnertz/aieos-governance-foundation
+          path: aieos-governance-foundation
+      - name: Structural smoke test (zero-cost, no API budget)
+        run: bash aieos-sherpa/tests/smoke-test.sh
+      - name: Lint the behavioral analysis script
+        run: python3 -m py_compile aieos-sherpa/tests/integration/validate-sherpa-run.py
